@@ -41,17 +41,17 @@ Não é necessário instalar o Maven: o projeto inclui o Maven Wrapper (`mvnw` e
    Linux/macOS:
 
    ```bash
-   export SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/estoque
-   export SPRING_DATASOURCE_USERNAME=root
-   export SPRING_DATASOURCE_PASSWORD=sua_senha
+   export DB_URL=jdbc:mysql://localhost:3306/estoque
+   export DB_USERNAME=root
+   export DB_PASSWORD=sua_senha
    ```
 
    Windows (PowerShell):
 
    ```powershell
-   $env:SPRING_DATASOURCE_URL="jdbc:mysql://localhost:3306/estoque"
-   $env:SPRING_DATASOURCE_USERNAME="root"
-   $env:SPRING_DATASOURCE_PASSWORD="sua_senha"
+   $env:DB_URL="jdbc:mysql://localhost:3306/estoque"
+   $env:DB_USERNAME="root"
+   $env:DB_PASSWORD="sua_senha"
    ```
 
 4. Execute a aplicação.
