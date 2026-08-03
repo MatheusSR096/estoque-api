@@ -26,7 +26,7 @@ Não é necessário instalar o Maven: o projeto inclui o Maven Wrapper (`mvnw` e
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/SEU-USUARIO/estoque-api.git
+   git clone https://github.com/MatheusSR096/estoque-api.git
    cd estoque-api
    ```
 
