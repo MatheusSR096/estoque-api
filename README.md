@@ -106,6 +106,54 @@ src/
     └── java/br/com/ifba/estoque_api/
 ```
 
+## Fluxo de trabalho em equipe
+
+Cada pessoa deve desenvolver sua funcionalidade em uma branch própria. Não faça
+commits diretamente na branch `main`.
+
+1. Antes de começar, acesse o projeto e atualize a `main`:
+
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
+2. Crie uma branch a partir da `main` atualizada:
+
+   ```bash
+   git switch -c feature/nome-da-funcionalidade
+   ```
+
+   Use nomes descritivos, por exemplo:
+
+   - `feature/cadastro-produto` para uma nova funcionalidade;
+   - `fix/correcao-validacao-produto` para uma correção;
+   - `docs/atualizacao-readme` para documentação.
+
+3. Desenvolva e teste sua alteração. Depois, crie o commit:
+
+   ```bash
+   git add .
+   git commit -m "feat: adiciona cadastro de produto"
+   ```
+
+4. Envie sua branch ao GitHub:
+
+   ```bash
+   git push -u origin feature/nome-da-funcionalidade
+   ```
+
+5. No GitHub, abra um **Pull Request** da sua branch para a branch `main`.
+   Descreva o que foi alterado e aguarde a revisão antes de fazer o merge.
+
+6. Depois que o Pull Request for aprovado e integrado, atualize sua `main` local
+   antes de iniciar outra funcionalidade:
+
+   ```bash
+   git switch main
+   git pull origin main
+   ```
+
 ## Boas práticas de configuração
 
 Não adicione senhas ou outras credenciais ao repositório. Em desenvolvimento,
