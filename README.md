@@ -153,9 +153,3 @@ commits diretamente na branch `main`.
    git switch main
    git pull origin main
    ```
-
-## Boas práticas de configuração
-
-Não adicione senhas ou outras credenciais ao repositório. Em desenvolvimento,
-prefira variáveis de ambiente; em produção, use o gerenciador de segredos da
-plataforma de hospedagem.
