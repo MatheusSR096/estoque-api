@@ -1,15 +1,17 @@
 package br.com.ifba.estoque_api.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.ifba.estoque_api.dto.CategoriaRequest;
 import br.com.ifba.estoque_api.dto.CategoriaResponse;
 import br.com.ifba.estoque_api.exception.NegocioException;
 import br.com.ifba.estoque_api.exception.RecursoNaoEncontradoException;
 import br.com.ifba.estoque_api.model.Categoria;
 import br.com.ifba.estoque_api.repository.CategoriaRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
