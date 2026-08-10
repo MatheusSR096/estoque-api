@@ -1,8 +1,8 @@
 package br.com.ifba.estoque_api.exception;
 
-import br.com.ifba.estoque_api.dto.ErroResponse;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,8 +12,29 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import br.com.ifba.estoque_api.dto.ErroResponse;
+import jakarta.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ErroResponse> handleConstraintViolation(ConstraintViolationException ex) {
+		
+		Map<String, String> campos = new LinkedHashMap<>();
+		
+		ex.getConstraintViolations().forEach(violation -> {
+			String propriedade = violation.getPropertyPath().toString();
+			String nomeCampo = propriedade.substring(propriedade.lastIndexOf('.') + 1);
+			
+			campos.put(nomeCampo, violation.getMessage());
+		});
+		
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body(ErroResponse.of(HttpStatus.BAD_REQUEST.value(), "Erro de validação no parâmetro da URL", campos));
+		
+	}
 
 	@ExceptionHandler(RecursoNaoEncontradoException.class)
 	public ResponseEntity<ErroResponse> handleRecursoNaoEncontrado(RecursoNaoEncontradoException ex) {
