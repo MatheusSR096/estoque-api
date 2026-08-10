@@ -8,12 +8,12 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = CnpjValidator.class)
-public @interface ValidCnpj {
+@Constraint(validatedBy = TelefoneValidator.class)
+public @interface ValidTelefone {
 	
-	String message() default "CNPJ inválido, deve conter 14 dígitos numéricos";
+	String message() default "Telefone inválido, deve conter até 11 dígitos numéricos";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

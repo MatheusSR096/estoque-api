@@ -1,6 +1,7 @@
 package br.com.ifba.estoque_api.dto;
 
 import br.com.ifba.estoque_api.dto.validation.ValidCnpj;
+import br.com.ifba.estoque_api.dto.validation.ValidTelefone;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -15,7 +16,8 @@ public record FornecedorRequest(
 		@ValidCnpj
 		String cnpj,
 		
-		@Size(max = 15, message = "O telefone deve ter no máximo 15 caracteres")
+		@Size(max = 11, message = "O telefone deve ter no máximo 11 caracteres")
+		@ValidTelefone
 		String telefone,
 		
 		@Email

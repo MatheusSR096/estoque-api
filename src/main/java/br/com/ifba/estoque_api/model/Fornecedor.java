@@ -24,6 +24,10 @@ import lombok.Setter;
 @Builder
 public class Fornecedor {
 	
+	/*
+	 * ADICIONAR VALIDAÇÃO PARA O TELEFONE
+	 * */
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -36,8 +40,8 @@ public class Fornecedor {
 	@Column(nullable = false, unique = true, length = 14)
 	private String cnpj;
 	
-	@Size(max = 15, message = "O telefone deve ter no máximo 15 caracteres")
-	@Column(length = 15)
+	@Size(max = 11, message = "O telefone deve ter no máximo 11 caracteres")
+	@Column(length = 11)
 	private String telefone;
 	
 	@Email
