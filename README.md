@@ -124,13 +124,35 @@ Content-Type: application/json
 }
 ```
 
-### Em desenvolvimento (próximos módulos)
+### Outros módulos disponíveis
 
-| Recurso | Rotas previstas |
-|---------|-----------------|
-| Fornecedores | `/api/fornecedores` |
-| Produtos | `/api/produtos`, `/api/produtos/estoque-baixo` |
-| Movimentações | `/api/movimentacoes`, `/api/movimentacoes/produto/{produtoId}` |
+| Recurso | Rotas |
+|---------|-------|
+| Fornecedores | CRUD em `/api/fornecedores` e busca em `/api/fornecedores/cnpj/{cnpj}` |
+| Produtos | CRUD e filtros em `/api/produtos`; alerta em `/api/produtos/estoque-baixo` |
+| Movimentações | `GET/POST /api/movimentacoes`; histórico em `/api/movimentacoes/produto/{produtoId}` |
+
+Exemplo de entrada de estoque:
+
+```http
+POST /api/movimentacoes
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "tipo": "ENTRADA",
+  "quantidade": 20,
+  "motivo": "Compra"
+}
+```
+
+Para uma saída, utilize `"tipo": "SAIDA"`. A API rejeita quantidades maiores
+que o saldo disponível e atualiza o estoque do produto na mesma transação.
+
+### Em desenvolvimento
+
+| Recurso | Rota prevista |
+|---------|---------------|
 | Relatórios | `/api/relatorios/valor-estoque` |
 
 ## Tratamento de erros

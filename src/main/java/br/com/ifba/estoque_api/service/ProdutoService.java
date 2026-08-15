@@ -5,6 +5,7 @@ import br.com.ifba.estoque_api.dto.ProdutoResponse;
 import br.com.ifba.estoque_api.exception.NegocioException;
 import br.com.ifba.estoque_api.exception.RecursoNaoEncontradoException;
 import br.com.ifba.estoque_api.model.Produto;
+import br.com.ifba.estoque_api.repository.MovimentacaoEstoqueRepository;
 import br.com.ifba.estoque_api.repository.ProdutoRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProdutoService {
 
 	private final ProdutoRepository produtoRepository;
+	private final MovimentacaoEstoqueRepository movimentacaoRepository;
 	private final CategoriaService categoriaService;
 	private final FornecedorService fornecedorService;
 
@@ -81,8 +83,13 @@ public class ProdutoService {
 
 	@Transactional
 	public void remover(Long id) {
-		// ponytail: quando MovimentacaoEstoque existir, bloquear a exclusão de produto com histórico.
-		produtoRepository.delete(buscarEntidadePorId(id));
+		Produto produto = buscarEntidadePorId(id);
+		if (movimentacaoRepository.existsByProdutoId(id)) {
+			throw new NegocioException(
+					"Não é possível remover o produto porque ele possui movimentações de estoque"
+			);
+		}
+		produtoRepository.delete(produto);
 	}
 
 	@Transactional(readOnly = true)
