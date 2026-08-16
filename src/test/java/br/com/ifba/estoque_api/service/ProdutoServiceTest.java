@@ -15,6 +15,7 @@ import br.com.ifba.estoque_api.exception.RecursoNaoEncontradoException;
 import br.com.ifba.estoque_api.model.Categoria;
 import br.com.ifba.estoque_api.model.Fornecedor;
 import br.com.ifba.estoque_api.model.Produto;
+import br.com.ifba.estoque_api.repository.MovimentacaoEstoqueRepository;
 import br.com.ifba.estoque_api.repository.ProdutoRepository;
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -29,6 +30,9 @@ public class ProdutoServiceTest {
 
 	@Mock
 	private ProdutoRepository produtoRepository;
+
+	@Mock
+	private MovimentacaoEstoqueRepository movimentacaoRepository;
 
 	@Mock
 	private CategoriaService categoriaService;
@@ -114,5 +118,16 @@ public class ProdutoServiceTest {
 	public void deveMarcarEstoqueBaixoQuandoAtualMenorOuIgualAoMinimo() {
 		assertTrue(ProdutoResponse.fromEntity(produto(10, 10)).estoqueBaixo());
 		assertTrue(!ProdutoResponse.fromEntity(produto(11, 10)).estoqueBaixo());
+	}
+
+	@Test
+	public void deveRejeitarExclusaoQuandoProdutoPossuirMovimentacoes() {
+		Produto produto = produto(10, 5);
+		when(produtoRepository.findById(1L)).thenReturn(Optional.of(produto));
+		when(movimentacaoRepository.existsByProdutoId(1L)).thenReturn(true);
+
+		assertThrows(NegocioException.class, () -> service.remover(1L));
+
+		verify(produtoRepository, never()).delete(any());
 	}
 }
