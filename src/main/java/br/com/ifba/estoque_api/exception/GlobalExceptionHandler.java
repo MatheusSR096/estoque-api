@@ -1,5 +1,6 @@
 package br.com.ifba.estoque_api.exception;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import br.com.ifba.estoque_api.dto.ErroResponse;
@@ -74,6 +76,18 @@ public class GlobalExceptionHandler {
 		return ResponseEntity
 				.status(HttpStatus.NOT_FOUND)
 				.body(ErroResponse.of(HttpStatus.NOT_FOUND.value(), "Recurso não encontrado"));
+	}
+
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ErroResponse> handleParametroInvalido(MethodArgumentTypeMismatchException ex) {
+		String esperado = ex.getRequiredType() == LocalDate.class
+				? "informe a data no formato aaaa-mm-dd (ex.: 2026-08-16)"
+				: "valor inválido para o parâmetro";
+
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body(ErroResponse.of(HttpStatus.BAD_REQUEST.value(),
+						"Parâmetro inválido na URL", Map.of(ex.getName(), esperado)));
 	}
 
 	@ExceptionHandler(Exception.class)
